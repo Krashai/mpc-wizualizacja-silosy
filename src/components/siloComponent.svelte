@@ -19,6 +19,12 @@ $: {
     console.log("Aktualizacja materialAmount:", materialAmount);
 }
 
+// Obliczenie ilości materiału możliwego do załadowania silosu do pełna
+$: {
+    siloVolume = (Math.PI * Math.pow((diameter / 2), 2) * (height - level) * density / 1000).toFixed(2);
+    console.log("Aktualizacja siloVolume:", siloVolume);
+}
+
 // Skalowanie zmiennej
 $: {
     scaledLevel = (level / 100) * 320;
@@ -69,6 +75,9 @@ dark:bg-gray-700">
         </div>
         <div class="w-full flex justify-center">
             <p class="text-xl font-semibold dark:text-white">{materialAmount} tony</p>
+        </div>
+        <div class="w-full flex justify-center mt-3">
+            <p class="text-md font-semibold dark:text-white">Do pełna: {siloVolume} tony</p>
         </div>
      </div>
 
