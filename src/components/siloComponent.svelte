@@ -12,29 +12,36 @@ export let siloVolume = "";
 let materialAmount = 0; // Deklaracja zmiennej materialAmount
 let scaledLevel = 0;    // Deklaracja zmiennej scaledLevel
 let color = "black";    // Początkowa wartość koloru
+let volumeSilo = 0;
+let siloActualLevel = 0;
+/// Obliczenie objętości silosa
+$: {
+    volumeSilo = (Math.PI * Math.pow((diameter /2), 2) * height)
+    console.log(siloName + " Objętość silosa " + volumeSilo)
+}
 
+$: {
+    siloActualLevel = (level / 100)
+}
 // Kalkulowanie ilości materiału w silosie
 $: {
-    materialAmount = (Math.PI * Math.pow((diameter / 2), 2) * level * density / 1000).toFixed(2);
-    console.log("Aktualizacja materialAmount:", materialAmount);
+    materialAmount = ((volumeSilo * siloActualLevel) * density).toFixed(2);
+    console.log(siloName + " Ilość materiału " + materialAmount)
 }
 
 // Obliczenie ilości materiału możliwego do załadowania silosu do pełna
 $: {
-    siloVolume = (Math.PI * Math.pow((diameter / 2), 2) * (height - level) * density / 1000).toFixed(2);
-    console.log("Aktualizacja siloVolume:", siloVolume);
+    siloVolume = ((volumeSilo - (volumeSilo * siloActualLevel)) * density ).toFixed(2);
 }
 
 // Skalowanie zmiennej
 $: {
     scaledLevel = (level / 100) * 320;
-    console.log("Aktualizacja scaledLevel:", scaledLevel);
 }
 
 // Reaktywna deklaracja do ustawiania koloru
 $: {
     color = getColorFromMaterial(siloMaterial);
-    console.log("Aktualizacja koloru:", color);
 }
 
 function getColorFromMaterial(material) {
@@ -47,6 +54,8 @@ function getColorFromMaterial(material) {
         return "red";
     } else if (nameUpper.includes("POD")) {
         return "blue";
+    } else if (nameUpper.includes("BO")){
+        return "pink"
     } else if (nameUpper.includes("L")) {
         return "green";
     } else if (nameUpper.includes("D")) {
@@ -76,8 +85,15 @@ dark:bg-gray-700">
         <div class="w-full flex justify-center">
             <p class="text-xl font-semibold dark:text-white">{materialAmount} tony</p>
         </div>
+        <div class="bg-blue-300 dark:bg-gray-800 rounded-lg">
+
+        
         <div class="w-full flex justify-center mt-3">
-            <p class="text-md font-semibold dark:text-white">Do pełna: {siloVolume} tony</p>
+            <p class="text-xl font-semibold dark:text-white"> {siloVolume} tony</p>
         </div>
+        <div class="w-full flex justify-center">
+            <p class="text-md font-semibold dark:text-white">WOLNY BUFOR</p>
+        </div>
+    </div>
      </div>
 

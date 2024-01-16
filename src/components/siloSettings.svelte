@@ -77,7 +77,7 @@ dark:text-white">
     </div>
 
     <div class="mb-1">
-        <label for="density" class="block text-sm font-bold text-gray-700 dark:text-white">Gęstość [kg/m³]</label>
+        <label for="density" class="block text-sm font-bold text-gray-700 dark:text-white">Gęstość [t/m³]</label>
         <input type="number" id="density" bind:value={silo.density} 
                class="mt-1 block w-full border border-gray-300 rounded-md dark:text-black shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
     </div>
